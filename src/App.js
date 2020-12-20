@@ -1,34 +1,81 @@
-import React from 'react';
+import { Component } from 'react';
 import s from './App.module.css';
-import Profile from './components/Profile/Profile';
-import user from './data/user.json';
-import Statistics from './components/Statistics/Statistics';
-import statisticalData from './data/statistical-data.json';
-import FriendList from './components/FriendList/FriendList';
-import friends from './data/friends.json';
-import TransactionHistory from './components/TransactionHistory/TransactionHistory';
-import transactions from './data/transactions.json';
+import { v4 as uuidv4 } from 'uuid';
+import ContactForm from './components/ContactForm';
+import Filter from './components/Filter';
+import ContactList from './components/ContactList';
 
-function App() {
-  return (
-    <div className={s.container}>
-      <Profile
-        name={user.name}
-        tag={user.tag}
-        location={user.location}
-        avatar={user.avatar}
-        stats={user.stats}
-      />
+class App extends Component {
+  state = {
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
+  };
 
-      <Statistics stats={statisticalData} />
+  createContact = ({ name, number }) => {
+    if (!name || !number) {
+      return alert(`Some field is empty.`);
+    }
+    const sameName = this.findSameName(name);
+    if (sameName) {
+      return alert(`${name} is already in contacts.`);
+    }
+    const newContact = {
+      id: uuidv4(),
+      name,
+      number,
+    };
+    this.setState(({ contacts }) => ({ contacts: [...contacts, newContact] }));
+  };
 
-      <Statistics title="Upload stats with title" stats={statisticalData} />
+  findSameName = name => {
+    const { contacts } = this.state;
+    return contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase(),
+    );
+  };
 
-      <FriendList friends={friends} />
+  deleteContact = id => {
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(contact => contact.id !== id),
+    }));
+  };
 
-      <TransactionHistory items={transactions} />
-    </div>
-  );
+  changeFilter = e => {
+    const { value } = e.currentTarget;
+    this.setState({ filter: value });
+  };
+
+  getVisiblesContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizeFilter = filter.toLowerCase();
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizeFilter),
+    );
+  };
+
+  render() {
+    const { filter } = this.state;
+    const filtredContacts = this.getVisiblesContacts();
+
+    return (
+      <div className={s.container}>
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.createContact} />
+        <h2>Contacts</h2>
+        <Filter value={filter} onChange={this.changeFilter} />
+        <ContactList
+          contacts={filtredContacts}
+          onDeleteContact={this.deleteContact}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
