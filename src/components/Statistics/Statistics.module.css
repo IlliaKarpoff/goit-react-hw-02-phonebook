@@ -1,0 +1,55 @@
+.statistics {
+  margin: 0 0 60px 0;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px 0px #939494;
+}
+
+.title {
+  margin: 0 auto;
+  height: 60px;
+  background-color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 3;
+  color: rgb(31, 29, 29);
+  text-align: center;
+}
+
+.statList {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+}
+
+.item {
+  width: 70px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+}
+
+.item:nth-child(1) {
+  background-color: rgb(89, 220, 243);
+}
+.item:nth-child(2) {
+  background-color: rgb(217, 89, 243);
+}
+.item:nth-child(3) {
+  background-color: rgb(248, 149, 207);
+}
+.item:nth-child(4) {
+  background-color: rgb(113, 166, 209);
+}
+.item:nth-child(5) {
+  background-color: rgb(89, 243, 153);
+}
+
+.item span {
+  width: 100%;
+  text-align: center;
+}

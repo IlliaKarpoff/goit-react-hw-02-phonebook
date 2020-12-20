@@ -1,0 +1,30 @@
+.transactionHistory {
+  width: 80%;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px 0px #939494;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th:not(:last-child) {
+  border-right: 1px solid #eee;
+}
+
+.transactionHistory thead {
+  background-color: rgb(36, 205, 228);
+  color: #fff;
+  text-transform: uppercase;
+}
+th,
+td {
+  padding: 15px;
+}
+tbody {
+  text-align: center;
+  color: #939494;
+}
+tr:nth-child(even) {
+  background-color: #e9f2f5;
+}
+th:nth-child(1) {
+  text-transform: uppercase;
+}
