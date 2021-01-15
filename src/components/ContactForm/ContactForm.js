@@ -1,49 +1,50 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
 
-class ContactForm extends Component {
+export default class ContactForm extends Component {
   state = {
     name: '',
     number: '',
   };
-
-  handleInputChange = e => {
+  handleInput = e => {
     const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
+    this.setState({
+      [name]: value,
+    });
   };
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state);
-    this.formReset();
-  };
-  formReset = () => {
     this.setState({ name: '', number: '' });
   };
-
   render() {
+    const { name, number } = this.state;
+
     return (
-      <form className={s.form} onSubmit={this.handleSubmit}>
-        <label className={s.label} htmlFor="">
+      <form onSubmit={this.handleSubmit} className={s.form}>
+        <label className={s.label}>
           Name
           <input
             type="text"
             name="name"
-            placeholder="Enter name.."
-            value={this.state.name}
-            onChange={this.handleInputChange}
+            value={name}
+            onChange={this.handleInput}
+            placeholder="Enter name..."
           ></input>
         </label>
-        <label className={s.label} htmlFor="">
+
+        <label className={s.label}>
           Number
           <input
-            type="tel"
+            type="text"
             name="number"
-            placeholder="Enter phone number.."
-            value={this.state.number}
-            onChange={this.handleInputChange}
+            value={number}
+            onChange={this.handleInput}
+            placeholder="Enter number..."
           ></input>
         </label>
+
         <button className={s.button} type="submit">
           Add contact
         </button>
@@ -51,9 +52,6 @@ class ContactForm extends Component {
     );
   }
 }
-
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
-
-export default ContactForm;
